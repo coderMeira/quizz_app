@@ -1,2 +1,2 @@
-*.dart linguist-language=dart
-*.* linguist-language=dart
+*.* linguist-vendored
+lib/*.dart linguist-vendored=false
