@@ -1,4 +1,4 @@
-#Wed Feb 23 18:47:16 WET 2022
+#Thu Feb 24 19:21:09 WET 2022
 base.0=/home/user/Desktop/git/flutter_apps/quizz_app/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

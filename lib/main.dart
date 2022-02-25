@@ -5,6 +5,7 @@ import 'package:flutter_complete_guide/quiz.dart';
 
 import 'quiz.dart';
 import 'result.dart';
+import 'set_image.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -94,7 +95,7 @@ class _MyAppState extends State<MyApp> {
       ],
     },
     {
-      "questionText": "In which standard lib is the function print() located?",
+      "questionText": "In which standard lib is the function printf() located?",
       "answers": [
         {"text": "stdlib.h", "score": 0},
         {"text": "stdio.h", "score": 1},
@@ -123,11 +124,14 @@ class _MyAppState extends State<MyApp> {
   ];
   var _questionIndex = 0;
   var _totalScore = 0;
+  bool _answerChosen = false;
+  int _isRightAnswer;
 
   void _resetQuiz() {
     setState(() {
       _questionIndex = 0;
       _totalScore = 0;
+      _answerChosen = false;
     });
   }
 
@@ -135,8 +139,9 @@ class _MyAppState extends State<MyApp> {
     _totalScore += score;
     setState(() {
       _questionIndex = _questionIndex + 1;
+      _isRightAnswer = score;
+      _answerChosen = true;
     });
-    print(_questionIndex);
   }
 
   @override
@@ -151,30 +156,22 @@ class _MyAppState extends State<MyApp> {
               centerTitle: true,
               backgroundColor: Colors.red,
             ),
-            body: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                      child: LinearProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-                    backgroundColor: Colors.white,
-                    value: (_questionIndex * 0.1),
-                    minHeight: 15,
-                  )),
-                  (_questionIndex < _questions.length
-                      ? Quiz(_questions, _answerQuestion, _questionIndex)
-                      : Result(_totalScore, _resetQuiz)),
-                  SizedBox(
-                    height: 100,
-                  ),
-                  Container(
-                    alignment: Alignment.bottomCenter,
-                    child: Image.asset("assets/red_check_mark.png",
-                        width: 150, height: 150, fit: BoxFit.fill),
-                  )
-                ])));
+            body: ListView(scrollDirection: Axis.vertical, children: [
+              Container(
+                  child: LinearProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+                backgroundColor: Colors.white,
+                value: (_questionIndex * 0.1),
+                minHeight: 15,
+              )),
+              (_questionIndex < _questions.length
+                  ? Quiz(_questions, _answerQuestion, _questionIndex)
+                  : Result(_totalScore, _resetQuiz)),
+              SizedBox(
+                height: 100,
+              ),
+              SetImage(_answerChosen, _isRightAnswer)
+            ])));
   }
 }
 
